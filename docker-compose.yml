@@ -1,0 +1,34 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: laravel_app
+    ports:
+      - 3005:80
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - laravel_net
+
+  db:
+    image: mysql:8.0
+    container_name: laravel_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel
+    ports:
+      - 3306:3306
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - laravel_net
+
+volumes:
+  dbdata:
+
+networks:
+  laravel_net:
